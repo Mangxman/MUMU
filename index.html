@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUMU THE BULL - Space Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           1. RESET & GAYA DASAR WEBSITE
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #030308;
+            color: #fff;
+            font-family: 'Fredoka', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ==========================================================================
+           2. STICKY HEADER NAV (TRANSPARAN HITAM & BLUR NYATA)
+           ========================================================================== */
+        header {
+            width: 100%;
+            padding: 10px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: rgba(3, 3, 8, 0.8) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .main-menu {
+            display: flex !important;
+            align-items: center !important;
+            flex-direction: row !important;
+            gap: 25px !important;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #ff7a00; }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bull-logo {
+            width: 200px !important;
+            height: 60px !important;
+            object-fit: contain;
+        }
+
+        .social-icons {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+        }
+
+        .social-icons a {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 28px !important;
+            height: 28px !important;
+        }
+
+        .social-icons a .img-icon {
+            width: 24px !important;
+            height: 24px !important;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .social-icons a svg {
+            width: 24px !important;
+            height: 24px !important;
+            fill: #ffffff;
+        }
+
+        /* Tombol Hamburger HP */
+        .menu-toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 1100;
+            padding: 5px;
+        }
+        .menu-toggle-btn span { display: block; width: 28px; height: 3px; background-color: #ffffff; border-radius: 2px; transition: all 0.3s ease-in-out; }
+        .menu-toggle-btn.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background-color: #ff7a00; }
+        .menu-toggle-btn.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle-btn.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); background-color: #ff7a00; }
+
+        /* Tombol Play Game Atas */
+        .btn-play-game { 
+            background: linear-gradient(135deg, #1a1b2e 0%, #0a0b10 100%); 
+            color: #ffffff; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 10px 24px; 
+            border: 2px solid #3b82f6; 
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); 
+            border-radius: 14px; 
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); 
+            text-decoration: none; 
+            transition: all 0.3s ease; 
+        }
+        .btn-play-game .ps5-icon { width: 38px; height: 38px; fill: #ffffff; filter: drop-shadow(0 0 4px #3b82f6); vertical-align: middle; }
+        .btn-play-game .game-text { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 1.5px; background: linear-gradient(to right, #ffffff 0%, #a5f3fc 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-play-game:hover { transform: scale(1.05) translateY(-2px); border-color: #22d3ee; box-shadow: 0 0 25px rgba(34, 211, 238, 0.7); }
+
+        /* ==========================================================================
+           3. BACKGROUND UTAMA (STARS, PLANET, METEOR)
+           ========================================================================== */
+        .space-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=1920') no-repeat center center; background-size: cover; z-index: -2; overflow: hidden; }
+        .stars { position: absolute; width: 100%; height: 100%; background-image: radial-gradient(white, rgba(255,255,255,.3) 1.5px, transparent 30px), radial-gradient(white, rgba(255,255,255,.2) 1px, transparent 20px); background-size: 350px 350px, 200px 200px; background-position: 0 0, 50px 70px; animation: twinkle 4s ease-in-out infinite alternate; z-index: -1; }
+        @keyframes twinkle { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        .uranus-system { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); width: 550px; height: 550px; z-index: -1; display: flex; justify-content: center; align-items: center; pointer-events: none; }
+        .uranus-body { position: absolute; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #73ecf7 0%, #46b3cf 45%, #1d5c73 75%, #051a24 100%); box-shadow: inset -20px -20px 60px rgba(0,0,0,0.9), 0 0 40px rgba(115, 236, 247, 0.2); animation: rotatePlanet 35s linear infinite; z-index: 2; }
+        .uranus-ring { position: absolute; width: 520px; height: 520px; border: 4px solid rgba(165, 243, 252, 0.35); border-radius: 50%; transform: rotateX(75deg); box-shadow: 0 0 20px rgba(165, 243, 252, 0.15); z-index: 3; }
+        @keyframes rotatePlanet { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .ufo-orbit-back, .ufo-orbit-front { position: absolute; width: 1000px; height: 1000px; display: flex; justify-content: center; align-items: center; transform: rotateX(75deg); }
+        .ufo-orbit-back { z-index: 1; } .ufo-orbit-front { z-index: 4; }
+        .ufo { position: absolute; font-size: 2.5rem; filter: drop-shadow(0 0 10px #73ecf7); }
+        .ufo-orbit-back .ufo { animation: orbitBack 8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .ufo-orbit-front .ufo { animation: orbitFront 8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes orbitBack { 0% { transform: rotate(0deg) translate(290px) rotate(-0deg) scale(0.7); opacity: 1; } 50% { transform: rotate(180deg) translate(290px) rotate(-180deg) scale(0.4); opacity: 0; } 100% { transform: rotate(360deg) translate(290px) rotate(-360deg) scale(0.7); opacity: 1; } }
+        @keyframes orbitFront { 0% { transform: rotate(0deg) translate(290px) rotate(-0deg) scale(0.7); opacity: 0; } 50% { transform: rotate(180deg) translate(290px) rotate(-180deg) scale(1.2); opacity: 1; } 100% { transform: rotate(360deg) translate(290px) rotate(-360deg) scale(0.7); opacity: 0; } }
+
+        .meteor-shower { position: absolute; width: 100%; height: 100%; transform: rotate(-35deg); z-index: -1; }
+        .meteor { position: absolute; top: -50px; width: 1.5px; height: 55px; background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0)); filter: drop-shadow(0 0 6px #fff); animation: meteorFall 4s linear infinite; opacity: 0; }
+        .meteor:nth-child(1) { left: 15%; animation-duration: 2.5s; animation-delay: 0s; }
+        .meteor:nth-child(2) { left: 35%; animation-duration: 3.5s; animation-delay: 1.5s; }
+        .meteor:nth-child(3) { left: 55%; animation-duration: 2s; animation-delay: 0.8s; }
+        .meteor:nth-child(4) { left: 75%; animation-duration: 4s; animation-delay: 2.3s; }
+        @keyframes meteorFall { 0% { top: -10%; transform: translateY(0); opacity: 1; } 70% { opacity: 1; } 100% { top: 110%; transform: translateY(800px); opacity: 0; } }
+
+        /* HUJAN KOIN LAYER */
+        .coin-rain-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            z-index: 10; 
+            overflow: hidden; 
+        }
+        .falling-coin { 
+            position: absolute; 
+            top: -80px; 
+            background-image: url('pumpfun.png'); 
+            background-size: 100% 100%; 
+            background-repeat: no-repeat; 
+            pointer-events: none; 
+            animation: coinDrop linear infinite; 
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+        }
+
+        @keyframes coinDrop {
+            0% { transform: translateY(0) rotate(0deg) rotateY(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(115vh) rotate(360deg) rotateY(360deg); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           4. HERO LAYOUT ENGINE (RESPONSIVE FLEX DESIGN)
+           ========================================================================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 140px 40px 60px 40px;
+            overflow: hidden;
+            z-index: 6;
+        }
+
+        .hero-layout-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .mumu-astronaut-container {
+            width: 25%;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .mumu-astronaut {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            animation: floatAstronaut 5s ease-in-out infinite;
+        }
+
+        .hero-content {
+            width: 50%;
+            text-align: center;
+            z-index: 10;
+        }
+        .main-title { font-family: 'Fredoka One', sans-serif; font-size: 9rem; line-height: 0.85; letter-spacing: -2px; margin-bottom: 10px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
+        .sub-title { font-family: 'Fredoka One', sans-serif; font-size: 4rem; letter-spacing: 2px; margin-bottom: 25px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
+        .description { font-size: 1.5rem; max-width: 700px; margin: 0 auto; line-height: 1.5; color: #f1f5f9; text-shadow: 0 2px 8px rgba(0,0,0,0.9); }
+
+        .mumu-ship-container {
+            width: 25%;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .mumu-ship {
+            width: 100%;
+            max-width: 340px;
+            height: auto;
+            transform: scaleX(-1); 
+            animation: shipEngineVibe 4s ease-in-out infinite;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.6));
+        }
+
+        @keyframes floatAstronaut { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(3deg); } }
+        @keyframes shipEngineVibe { 0%, 100% { transform: translateY(0) scaleX(-1); } 50% { transform: translateY(-20px) scaleX(-1); } }
+
+        .contract-card {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 380px;
+            z-index: 20;
+        }
+        .contract-info { display: flex; flex-direction: column; text-align: left; }
+        .contract-label { font-size: 0.75rem; color: #666; font-weight: 700; }
+        .contract-address { font-family: monospace; font-size: 0.85rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .copy-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
+
+        /* ==========================================================================
+           5. LAYOUT SUB SECTION LAIN (HOW TO BUY, GAME, DLL)
+           ========================================================================== */
+        .content-section { min-height: 80vh; padding: 100px 40px 60px 40px; max-width: 1200px; margin: 0 auto; text-align: center; position: relative; z-index: 5; }
+        .section-title { font-family: 'Fredoka One', sans-serif; font-size: 3.5rem; margin-bottom: 20px; color: #ffffff; text-shadow: 0 0 15px rgba(115, 236, 247, 0.4); }
+        .section-desc { font-size: 1.3rem; margin-bottom: 40px; color: #ccc; }
+
+        /* How To Buy */
+        .how-to-buy-wrapper { display: flex; align-items: center; justify-content: center; gap: 40px; width: 100%; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; flex: 1; }
+        .step-card { background: rgba(255, 255, 255, 0.04); border: 2px solid rgba(165, 243, 252, 0.15); border-radius: 20px; padding: 25px; text-align: left; backdrop-filter: blur(10px); }
+        .step-card h3 { font-family: 'Fredoka One', sans-serif; font-size: 1.6rem; color: #ff7a00; margin-bottom: 12px; }
+        .step-card p { font-size: 1rem; line-height: 1.5; color: #cbd5e1; }
+        .side-character { width: 340px; height: auto; flex-shrink: 0; mix-blend-mode: screen; filter: drop-shadow(0 0 20px rgba(115, 236, 247, 0.4)); pointer-events: none; }
+        .float-char-1 { animation: sideFloat 4.5s ease-in-out infinite; }
+        .float-char-2 { animation: sideFloat 5s ease-in-out infinite 0.5s; }
+        @keyframes sideFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+
+        /* Community */
+        .community-wrapper { display: flex; align-items: center; justify-content: space-between; gap: 30px; width: 100%; margin-top: 40px; }
+        .community-center-content { flex: 1; max-width: 600px; }
+        .community-side-img { width: 280px; height: auto; flex-shrink: 0; pointer-events: none; }
+        .comm-float-left { animation: commVisualFloat 5s ease-in-out infinite; }
+        .comm-float-right { animation: commVisualFloat 5.5s ease-in-out infinite 0.3s; }
+        @keyframes commVisualFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .community-buttons { display: flex; justify-content: center; gap: 20px; margin-top: 25px; }
+        .community-btn { display: inline-block; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.2s; }
+        .tg-color { background-color: #0088cc; } .x-color { background-color: #1da1f2; }
+
+        /* Meme Collection Gallery */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 30px; }
+        .gallery-item { background: rgba(255, 255, 255, 0.02); border: 2px dashed rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 15px; display: flex; justify-content: center; align-items: center; height: 280px; }
+        .gallery-item img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.08) rotate(2deg); }
+
+        /* ==========================================================================
+           5. GAME SECTION MODUL - WEB GAME & PREVIEW LAUNCHER (ITCH.IO LINKED)
+           ========================================================================== */
+        .game-wrapper { 
+            display: flex; 
+            flex-direction: column !important; 
+            align-items: center; 
+            gap: 30px; 
+            width: 100%; 
+            margin-top: 20px; 
+        }
+        
+        .game-showcase-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 15;
+        }
+
+        /* WEB GAME PANEL TATA LETAK BARU (SAMPING KIRI & KANAN) */
+        .web-game-arcade-layout {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .game-side-mascot-container {
+            width: 18%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-side-mascot {
+            width: 100%;
+            max-width: 190px;
+            height: auto;
+        }
+
+        .web-game-fullcard {
+            width: 64%;
+            background: rgba(10, 10, 26, 0.9);
+            border: 3px solid #73ecf7;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 0 30px rgba(115, 236, 247, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Tampilan Arena Game Playable Langsung */
+        .web-arcade-screen {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: radial-gradient(circle, #101028 0%, #050510 100%);
+            border-radius: 16px;
+            border: 2px solid rgba(115, 236, 247, 0.4);
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .game-score-board {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: #73ecf7;
+            text-shadow: 0 0 8px #73ecf7;
+            font-weight: 900;
+            z-index: 5;
+            text-align: left;
+            line-height: 1.4;
+        }
+        .high-score-label {
+            color: #ff7a00;
+            text-shadow: 0 0 8px #ff7a00;
+        }
+
+        /* Target Objek Game Clickable */
+        .game-clickable-target {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.08s ease;
+            z-index: 6;
+        }
+        .game-clickable-target.coin-target {
+            background-image: url('pumpfun.png');
+            filter: drop-shadow(0 0 12px #ff7a00);
+        }
+        .game-clickable-target.bomb-target {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff3333'><path d='M12 2c1.1 0 2 .9 2 2v1.1c2.4.4 4.4 2 5.3 4.3.4-.1.8-.1 1.2.1 1 .5 1.4 1.7.9 2.7l-1 2c-.4.8-1.2 1.3-2.1 1.3H5.7c-.9 0-1.7-.5-2.1-1.3l-1-2c-.5-1-.1-2.2.9-2.7.4-.2.8-.2 1.2-.1C5.6 7.1 7.6 5.5 10 5.1V4c0-1.1.9-2 2-2zm0 15c2.8 0 5 2.2 5 5H7c0-2.8 2.2-5 5-5z'/></svg>");
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff3333;
+            filter: drop-shadow(0 0 15px #ff3333);
+        }
+        .game-clickable-target:active { transform: scale(0.85); }
+
+        /* Overlay Interface */
+        .game-start-overlay, .game-over-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 8, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+        .game-over-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ff3333;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 51, 51, 0.6);
+            animation: textPulse 1s infinite alternate;
+        }
+        @keyframes textPulse { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
+
+        /* GRID UNTUK EXTERNAL UNITY GAMES (ITCH.IO) */
+        .games-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px; 
+            width: 100%;
+        }
+        .game-card { 
+            background: rgba(5, 5, 12, 0.85); 
+            border: 3px solid #ff7a00; 
+            border-radius: 24px; 
+            padding: 20px; 
+            box-shadow: 0 0 25px rgba(216, 92, 0, 0.2); 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .game-title-meta {
+            font-family: 'Fredoka One', sans-serif;
+            font-size: 1.4rem;
+            color: #ff7a00;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }
+        
+        .game-preview-container {
+            width: 100%;
+            position: relative;
+            aspect-ratio: 16 / 9; 
+            background-color: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+        .game-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .game-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 180%;
+            background: rgba(3, 3, 8, 0.55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .play-arcade-btn {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #ff7a00 0%, #d85c00 100%);
+            border: 2px solid #ffffff;
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 122, 0, 0.6);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .game-preview-container:hover .game-thumbnail { transform: scale(1.06); }
+        .game-preview-container:hover .game-overlay { background: rgba(3, 3, 8, 0.25); }
+        .game-preview-container:hover .play-arcade-btn {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(255, 122, 0, 1);
+            border-color: #ff7a00;
+            background: linear-gradient(135deg, #ff9533 0%, #ff7a00 100%);
+        }
+
+        .game-float-1 { animation: gameCharFloat 4s ease-in-out infinite; }
+        .game-float-2 { animation: gameCharFloat 4.3s ease-in-out infinite 0.2s; }
+        @keyframes gameCharFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* Speaker Audio Pojok Kiri */
+        .music-btn { position: fixed; bottom: 40px; left: 40px; width: 55px; height: 55px; background-color: rgba(0, 0, 0, 0.8); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; z-index: 999; box-shadow: 0 8px 20px rgba(0,0,0,0.6); backdrop-filter: blur(5px); transition: transform 0.2s, border-color 0.3s; }
+        .music-btn svg { width: 26px; height: 26px; fill: #ffffff; }
+        .music-btn:hover { transform: scale(1.1); border-color: #ff7a00; }
+        .music-btn.music-on { border-color: #73ecf7; box-shadow: 0 0 15px rgba(115, 236, 247, 0.4); animation: audioGlow 2s infinite ease-in-out; }
+        .music-btn.music-on svg { fill: #73ecf7; }
+        @keyframes audioGlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        
+        .toast-notification { position: fixed; bottom: 110px; right: 40px; background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%); color: #22d3ee; padding: 10px 20px; border-radius: 12px; border: 1px solid #3b82f6; font-family: 'Fredoka', sans-serif; font-weight: bold; font-size: 0.9rem; box-shadow: 0 0 15px rgba(34, 211, 238, 0.4); z-index: 1000; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; }
+        .toast-notification.show { opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           6. MASTER RESPONSIVE ENGINE (MUTLAK BERLAKU DI LAYAR HP/MOBILE)
+           ========================================================================== */
+        @media (max-width: 992px) {
+            header { padding: 10px 20px; }
+            .menu-toggle-btn { display: flex; }
+            
+            .main-menu {
+                position: fixed !important;
+                top: 0 !important;
+                right: -100% !important;
+                width: 280px !important;
+                height: 100vh !important;
+                background: linear-gradient(180deg, #070714 0%, #030308 100%) !important;
+                border-left: 2px solid #3b82f6;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                align-items: flex-start !important;
+                gap: 20px !important;
+                padding: 100px 25px 40px 25px !important;
+                transition: right 0.3s ease-in-out !important;
+                z-index: 1050;
+            }
+            .main-menu.mobile-open { right: 0 !important; }
+            .main-menu .nav-link { font-size: 1.2rem; width: 100%; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+            .logo-area { order: -1; margin-bottom: 15px; }
+
+            .hero { 
+                padding: 120px 20px 60px 20px !important; 
+                min-height: 100vh; 
+                height: auto !important;
+                display: flex !important; 
+                flex-direction: column !important; 
+                justify-content: center !important;
+                align-items: center !important;
+            }
+            
+            .hero-layout-wrapper {
+                flex-direction: column !important;
+                gap: 25px !important;
+                width: 100% !important;
+                display: flex !important;
+            }
+            
+            .mumu-astronaut-container, .mumu-ship-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                display: flex !important;
+                justify-content: center;
+            }
+
+            .hero-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                text-align: center !important;
+                display: block !important; 
+                margin: 15px 0 !important;
+            }
+
+            .mumu-astronaut-container { order: 1; }
+            .hero-content { order: 2; }
+            .mumu-ship-container { order: 3; }
+
+            .mumu-astronaut { width: 45% !important; max-width: 150px !important; height: auto; }
+            .mumu-ship { 
+                width: 50% !important; 
+                max-width: 160px !important; 
+                transform: scaleX(-1) !important; 
+                animation: shipMobileVibe 4s ease-in-out infinite !important;
+            }
+
+            .main-title { font-size: 4.2rem !important; display: block !important; }
+            .sub-title { font-size: 2.2rem !important; display: block !important; margin-bottom: 15px !important; }
+            .description { font-size: 1.1rem !important; line-height: 1.5; padding: 0 5px; }
+            
+            .contract-card { 
+                position: relative !important; 
+                bottom: auto !important; 
+                right: auto !important; 
+                margin: 30px auto 0 auto !important; 
+                width: 100%; 
+                max-width: 320px; 
+                z-index: 20;
+            }
+
+            /* Tampilan Game Samping Menjadi Vertikal di HP */
+            .web-game-arcade-layout {
+                flex-direction: column !important;
+                gap: 15px;
+            }
+            .web-game-fullcard { width: 100%; padding: 15px; }
+            .game-side-mascot-container { width: 50%; }
+
+            .games-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+                padding: 0 10px;
+            }
+            .play-arcade-btn { font-size: 1.1rem !important; padding: 10px 24px !important; }
+            
+            .music-btn { bottom: 20px; left: 20px; width: 48px; height: 48px; } .music-btn svg { width: 22px; height: 22px; }
+            .toast-notification { right: 50%; transform: translateX(50%) translateY(10px); bottom: 100px; }
+            .toast-notification.show { transform: translateX(50%) translateY(0); }
+        }
+
+        @keyframes shipMobileVibe { 0%, 100% { transform: translateY(0) scaleX(-1); } 50% { transform: translateY(-12px) scaleX(-1); } }
+
+        /* Responsive untuk halaman content */
+        @media (max-width: 1200px) {
+            .how-to-buy-wrapper, .community-wrapper, .game-wrapper { flex-direction: column !important; text-align: center !important; }
+            .side-character, .community-side-img { width: 260px !important; margin: 20px auto !important; }
+            .community-wrapper { flex-direction: column-reverse !important; }
+            .games-grid { grid-template-columns: 1fr !important; max-width: 600px; }
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .main-menu { gap: 15px !important; }
+            .nav-link { font-size: 0.95rem; }
+            .bull-logo { width: 120px !important; height: 120px !important; }
+            .mumu-astronaut, .mumu-ship { max-width: 240px !important; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" loop>
+        <source src="beats.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <button id="music-toggle" class="music-btn" title="Turn Music On/Off">
+        <svg id="speaker-icon" viewBox="0 0 24 24" width="26" height="26">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77zM3 9v6h4l5 5V4L7 9H3zm7 5.17l-2.17-2.17H5v-2h2.83L10 7.83v6.34z"/>
+            <line id="speaker-cross" x1="2" y1="2" x2="22" y2="22" style="stroke:#ff4a4a; stroke-width:2.5; stroke-linecap:round;" />
+        </svg>
+    </button>
+
+    <div id="toast-msg" class="toast-notification">✅ Smart Contract Copied!</div>
+    
+    <div class="coin-rain-container" id="coin-container"></div>
+
+    <div class="space-container">
+        <div class="stars"></div>
+        <div class="uranus-system">
+            <div class="uranus-ring"></div>
+            <div class="ufo-orbit-back"><div class="ufo">🛸</div></div>
+            <div class="uranus-body"></div>
+            <div class="ufo-orbit-front"><div class="ufo">🛸</div></div>
+        </div>
+        <div class="meteor-shower">
+            <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
+            <div class="meteor"></div><div class="meteor-shower"></div><div class="meteor"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="social-icons">
+                <a href="https://t.me/MumuTheBullchatg" target="_blank" title="Telegram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.62.15-.15 2.7-2.46 2.75-2.68.01-.03.01-.14-.06-.2-.07-.06-.17-.04-.25-.02-.11.02-1.83 1.16-5.16 3.41-.49.33-.93.5-1.33.49-.44-.01-1.29-.25-1.92-.45-.77-.25-1.39-.39-1.34-.83.03-.23.35-.46.97-.71 3.82-1.66 6.37-2.75 7.66-3.29 3.64-1.53 4.4-1.8 4.89-1.81.11 0 .35.03.5.15.13.1.17.24.18.34-.01.06.02.43 0 .7z"/></svg>
+                </a>
+                <a href="https://x.com/mumu_bull" target="_blank" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://dexscreener.com/solana/91b1q46q5dif6gnubbrfgmy3xgcuztofhnsstdpg5uqw" target="_blank" title="Dexscreener">
+                    <img src="dexscaners.jpg" alt="Dexscreener" class="img-icon">
+                </a>
+                <a href="https://dexscreener.com/solana/91b1q46q5dif6gnubbrfgmy3xgcuztofhnsstdpg5uqw" target="_blank" title="Pump.fun">
+                    <img src="pumpfun.png" alt="Pump.fun" class="img-icon">
+                </a>
+            </div>
+
+            <nav class="main-menu" id="navMenu">
+                <a href="#community" class="nav-link">Community</a>
+                
+                <div class="logo-area">
+                    <img src="mumu-head.png" alt="Mumu Logo" class="bull-logo">
+                    <span class="logo-text">MUMU<br><small>THE BULL</small></span>
+                </div>
+
+                <a href="#how-to-buy" class="nav-link">How to Buy</a>
+                <a href="#meme-collection" class="nav-link">Meme Collection</a>
+                <a href="#game" class="nav-link">Game</a>
+            </nav>
+
+            <div class="action-buttons">
+                <a href="#game" class="btn btn-play-game">
+                    <svg class="ps5-icon" viewBox="0 0 24 24">
+                        <path d="M7.38 5.75c-.82 0-1.54.43-1.92 1.08L3.21 10.7a4.914 4.914 0 00-.71 2.53c0 .87.23 1.69.63 2.41l2.5 4.5c.38.68 1.11 1.11 1.9 1.11h8.94c.79 0 1.52-.43 1.9-1.11l2.5-4.5c.4-.72.63-1.54.63-2.41 0-.91-.25-1.78-.71-2.53l-2.25-3.87c-.38-.65-1.1-1.08-1.92-1.08H7.38zM6 10.5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm3-1.5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-6 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12.5 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zm2.5-2.5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2.5-2.5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z" opacity=".2"/>
+                        <path d="M17.5 7.5c-.53 0-1.03.2-1.42.56L14.7 9.5a1 1 0 00-.32.71v.09c.07.47.45.84.92.89h1.4c.55 0 1-.45 1-1v-1c0-.42-.26-.77-.63-.92-.18-.05-.37-.08-.57-.08zM6.5 7.5c-.2 0-.39.03-.57.08-.37.15-.63.5-.63.92v1c0 .55.45 1 1 1h1.4c.47-.05.85-.42.92-.89v-.09a1 1 0 00-.32-.71L6.92 8.06c-.39-.36-.89-.56-1.42-.56zM12 9c-2.48 0-4.5 1.34-4.5 3v1.5c0 2.48 2.02 4.5 4.5 4.5s4.5-2.02 4.5-4.5V12c0-1.66-2.02-3-4.5-3zm2.5 4.5c0 1.38-1.12 2.5-2.5 2.5s-2.5-1.12-2.5-2.5V13c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v.5zM4.11 14.24a3.01 3.01 0 00-.11.8c0 .91.41 1.77 1.12 2.35l2.22 1.82a1.002 1.002 0 001.37-.1c.36-.39.33-1.02-.07-1.37l-1.92-1.57a1.02 1.02 0 01-.37-.78c0-.18.05-.36.14-.51.24-.42-.04-.95-.51-.95-.33-.01-.65.12-.87.31zm15.78 0c-.22-.19-.54-.32-.87-.31-.47 0-.75.53-.51.95.09.15.14.33.14.51 0 .31-.14.61-.37.78l-1.92 1.57c-.4.35-.43.98-.07 1.37.2.22.49.34.78.34.21 0 .42-.07.59-.2l2.22-1.82c.71-.58 1.12-1.44 1.12-2.35 0-.28-.04-.55-.11-.8z"/>
+                    </svg>
+                    <span class="game-text">PLAY GAME</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="hero" id="lore">
+        <div class="hero-layout-wrapper">
+            <div class="mumu-astronaut-container">
+                <img src="mumu-astronaut-candle-removebg-preview.png" alt="Mumu Astronaut" class="mumu-astronaut">
+            </div>
+            <div class="hero-content">
+                <h1 class="main-title">MUMU</h1>
+                <h2 class="sub-title">THE BULL</h2>
+                <p class="description">
+                    Mumu is a muuuvment to unite everyone in crypto. Backed by number go up technology and Solana OGs.
+                </p>
+            </div>
+            <div class="mumu-ship-container">
+                <img src="mumuship.png" alt="Mumu Rocket Ship" class="mumu-ship">
+            </div>
+        </div>
+
+        <div class="contract-card">
+            <div class="contract-info">
+                <span class="contract-label">Contract Address</span>
+                <span id="ca-text" class="contract-address">hf34pZHnV4entu9bdp4pFEmeKpivEuSuHA...</span>
+            </div>
+            <button class="copy-btn" id="copy-ca-btn">📋</button>
+        </div>
+    </main>
+
+    <section id="how-to-buy" class="content-section">
+        <h2 class="section-title">HOW TO BUY $MUMU</h2>
+        <div class="how-to-buy-wrapper">
+            <img src="mumu10.jpg" alt="Mumu Stand" class="side-character float-char-1">
+            <div class="steps-grid">
+                <div class="step-card">
+                    <h3>1. Create Wallet</h3>
+                    <p>Download Phantom or your wallet of choice from the app store or google play store.</p>
+                </div>
+                <div class="step-card">
+                    <h3>2. Get Some SOL</h3>
+                    <p>Have SOL in your wallet to switch to $MUMU. If you don't have any SOL, you can buy it directly on phantom.</p>
+                </div>
+                <div class="step-card">
+                    <h3>3. Switch to $MUMU</h3>
+                    <p>Go to Raydium or pump swap , paste the $MUMU contract address, and confirm the swap!</p>
+                </div>
+            </div>
+            <img src="alon1.jpg" alt="Alon Astronaut" class="side-character float-char-2">
+        </div>
+    </section>
+
+    <section id="community" class="content-section">
+        <h2 class="section-title">JOIN THE MUUUVMENT</h2>
+        <div class="community-wrapper">
+            <img src="bull1.png" alt="Mumu on Earth" class="community-side-img comm-float-left">
+            <div class="community-center-content">
+                <p class="section-desc">Our community grows stronger every day. Be a part of the bull run!</p>
+                <div class="community-buttons">
+                    <a href="https://t.me/MumuTheBullchatg" target="_blank" class="community-btn tg-color">Join Telegram</a>
+                    <a href="https://x.com/mumu_bull" target="_blank" class="community-btn x-color">Follow X / Twitter</a>
+                </div>
+            </div>
+            <img src="bull.png" alt="Mumu with Balloons" class="community-side-img comm-float-right">
+        </div>
+    </section>
+
+    <section id="meme-collection" class="content-section">
+        <h2 class="section-title">MEME COLLECTION</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="mumu1.png" alt="Meme 1"></div>
+            <div class="gallery-item"><img src="mumu2.png" alt="Meme 2"></div>
+            <div class="gallery-item"><img src="mumu3.png" alt="Meme 3"></div>
+            <div class="gallery-item"><img src="mumu4.png" alt="Meme 4"></div>
+            <div class="gallery-item"><img src="mumu5.png" alt="Meme 5"></div>
+            <div class="gallery-item"><img src="mumu6.png" alt="Meme 6"></div>
+            <div class="gallery-item"><img src="mumu7.png" alt="Meme 7"></div>
+            <div class="gallery-item"><img src="mumu8.png" alt="Meme 8"></div>
+        </div>
+    </section>
+
+    <section id="game" class="content-section">
+        <h2 class="section-title">MUMU SPACE ARCADE</h2>
+        <p class="section-desc" style="margin-bottom: 25px;">Mainkan game web interaktif langsung disini, atau coba Game Unity kami di portal resmi Itch.io!</p>
+        
+        <div class="game-wrapper">
+            <div class="game-showcase-container">
+                
+                <div class="web-game-arcade-layout">
+                    
+                    <div class="game-side-mascot-container">
+                        <img src="bull game.png" alt="Bull Gamer" class="game-side-mascot game-float-1">
+                    </div>
+
+                    <div class="web-game-fullcard">
+                        <div class="game-title-meta" style="color: #73ecf7; text-align: center; width: 100%;">🎯 WEB MINI-GAME: MUMU COIN PUMP</div>
+                        
+                        <div class="web-arcade-screen" id="arcade-screen">
+                            <div class="game-score-board">
+                                PUMP SCORE: <span id="game-score">0</span><br>
+                                <span class="high-score-label">HIGH SCORE: <span id="game-highscore">0</span></span>
+                            </div>
+                            
+                            <div class="game-clickable-target" id="game-target" style="display: none;"></div>
+                            
+                            <div class="game-start-overlay" id="game-overlay">
+                                <h3 style="font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; letter-spacing: 1px;">MUMU COIN PUMPER</h3>
+                                <p style="color: #cbd5e1; font-size: 0.95rem; max-width: 440px; text-align: center;">Klik koin capsule Pump.fun untuk mencetak skor! Awas, jangan klik <b>BOM 💣</b> atau Anda akan meledak!</p>
+                                <button class="play-arcade-btn" id="start-game-btn" style="background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%); box-shadow: 0 0 15px #00b4d8;">START PUMPING</button>
+                            </div>
+
+                            <div class="game-over-overlay" id="game-over-screen" style="display: none;">
+                                <div class="game-over-title">💥 GAME OVER 💥</div>
+                                <p style="color: #cbd5e1; font-size: 1.1rem; font-family: 'Orbitron', sans-serif;"> your score: <span id="final-score" style="color: #73ecf7; font-weight: bold;">0</span></p>
+                                <p style="color: #cbd5e1; font-size: 0.95rem; margin-top: -5px;">your  crash paus/dump bom!</p>
+                                <button class="play-arcade-btn" id="restart-game-btn" style="background: linear-gradient(135deg, #ff4e50 0%, #f9d423 100%); box-shadow: 0 0 15px #ff3333; border-color: #fff;">PUMP AGAIN (RESTART)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-side-mascot-container">
+                        <img src="alon game.png" alt="Alon Gamer" class="game-side-mascot game-float-2">
+                    </div>
+
+                </div>
+
+                <div class="games-grid">
+                    
+                    <div class="game-card">
+                        <div class="game-title-meta">🛸 MUMU SPACE ADVENTURE (UNITY)</div>
+                        <a href="https://hermsan.itch.io/mumu-game" target="_blank" class="game-preview-container">
+                            <img src="mumugame.jpg" alt="Game 1 Cover" class="game-thumbnail">
+                            <div class="game-overlay">
+                                <div class="play-arcade-btn">PLAY ON ITCH.IO</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-title-meta">🌌 ALON COSMIC FLIGHT (UNITY)</div>
+                        <a href="https://itch.io" target="_blank" class="game-preview-container">
+                            <img src="mumu1.png" alt="Game 2 Cover" class="game-thumbnail">
+                            <div class="game-overlay">
+                                <div class="play-arcade-btn">PLAY ON ITCH.IO</div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. Mobile Hamburger Slide Panel Toggle ---
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const navMenu = document.getElementById('navMenu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        menuToggleBtn.addEventListener('click', () => {
+            menuToggleBtn.classList.toggle('active');
+            navMenu.classList.toggle('mobile-open');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggleBtn.classList.remove('active');
+                navMenu.classList.remove('mobile-open');
+            });
+        });
+
+        // --- 2. Kontrol Audio Background ---
+        const music = document.getElementById('bg-music');
+        const toggleBtn = document.getElementById('music-toggle');
+        const crossLine = document.getElementById('speaker-cross');
+        music.volume = 0.4; 
+
+        toggleBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play().then(() => {
+                    crossLine.style.setProperty('display', 'none', 'important');
+                    toggleBtn.classList.add('music-on');
+                }).catch(error => console.log("Audio tertahan sistem browser:", error));
+            } else {
+                music.pause();
+                crossLine.style.setProperty('display', 'inline', 'important');
+                toggleBtn.classList.remove('music-on');
+            }
+        });
+
+        // --- 3. Mesin Salin Alamat Kontrak Token (CA) ---
+        const copyBtn = document.getElementById('copy-ca-btn');
+        const toast = document.getElementById('toast-msg');
+        const realSmartContract = "hf34pZHnV4entu9bdp4pFEmeKpivEUeSUhASgWopump"; 
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(realSmartContract).then(() => {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            }).catch(err => console.error('Gagal menyalin token: ', err));
+        });
+
+        // --- 4. Sistem Generator Hujan Koin Kapsul (Pump.fun) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('coin-container');
+            const coinCount = 20; 
+
+            for (let i = 0; i < coinCount; i++) {
+                const coin = document.createElement('div');
+                coin.classList.add('falling-coin');
+                
+                const baseWidth = Math.random() * 15 + 15; 
+                const capsuleHeight = baseWidth * 1.6;     
+
+                coin.style.width = `${baseWidth}px`;
+                coin.style.height = `${capsuleHeight}px`;
+                coin.style.left = `${Math.random() * 100}%`; 
+                
+                const duration = Math.random() * 4 + 4; 
+                coin.style.animationDuration = `${duration}s`;
+                const delay = Math.random() * 6; 
+                coin.style.animationDelay = `${delay}s`;
+                container.appendChild(coin);
+            }
+            
+            // Muat High Score yang tersimpan di browser saat web dibuka
+            const savedHighScore = localStorage.getItem('mumu_highscore') || 0;
+            document.getElementById('game-highscore').textContent = savedHighScore;
+        });
+
+        // --- 5. Logika Mesin Game Web Interaktif (Koin Kapsul & Perangkap Bom) ---
+        const arcadeScreen = document.getElementById('arcade-screen');
+        const gameTarget = document.getElementById('game-target');
+        const gameOverlay = document.getElementById('game-overlay');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const startBtn = document.getElementById('start-game-btn');
+        const restartBtn = document.getElementById('restart-game-btn');
+        const scoreDisplay = document.getElementById('game-score');
+        const highScoreDisplay = document.getElementById('game-highscore');
+        const finalScoreDisplay = document.getElementById('final-score');
+
+        let score = 0;
+        let highScore = localStorage.getItem('mumu_highscore') || 0;
+        let gameInterval;
+        let isPlaying = false;
+        let targetType = 'coin'; 
+
+        function spawnTarget() {
+            if (!isPlaying) return;
+            
+            const randChance = Math.random();
+            if (randChance < 0.3) {
+                targetType = 'bomb';
+                gameTarget.className = 'game-clickable-target bomb-target';
+            } else {
+                targetType = 'coin';
+                gameTarget.className = 'game-clickable-target coin-target';
+            }
+
+            const maxX = arcadeScreen.clientWidth - 75;
+            const maxY = arcadeScreen.clientHeight - 75;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            gameTarget.style.left = `${randomX}px`;
+            gameTarget.style.top = `${randomY}px`;
+            gameTarget.style.display = 'block';
+        }
+
+        function startGame() {
+            score = 0;
+            scoreDisplay.textContent = score;
+            isPlaying = true;
+            gameOverlay.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            
+            spawnTarget();
+            gameInterval = setInterval(refreshTargetLoop, 1100);
+        }
+
+        function refreshTargetLoop() {
+            clearInterval(gameInterval);
+            spawnTarget();
+            const currentSpeed = Math.max(650, 1100 - (score * 15));
+            gameInterval = setInterval(refreshTargetLoop, currentSpeed);
+        }
+
+        function triggerGameOver() {
+            isPlaying = false;
+            clearInterval(gameInterval);
+            gameTarget.style.display = 'none';
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('mumu_highscore', highScore);
+                highScoreDisplay.textContent = highScore;
+            }
+            
+            finalScoreDisplay.textContent = score;
+            gameOverScreen.style.display = 'flex';
+        }
+
+        gameTarget.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isPlaying) return;
+            
+            if (targetType === 'bomb') {
+                triggerGameOver();
+            } else {
+                score++;
+                scoreDisplay.textContent = score;
+                
+                arcadeScreen.style.borderColor = '#73ecf7';
+                setTimeout(() => { arcadeScreen.style.borderColor = 'rgba(115, 236, 247, 0.4)'; }, 90);
+                
+                refreshTargetLoop();
+            }
+        });
+
+        startBtn.addEventListener('click', (e) => { e.stopPropagation(); startGame(); });
+        restartBtn.addEventListener('click', (e) => { e.stopPropagation(); startGame(); });
+    </script>
+</body>
+</html>
